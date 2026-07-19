@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Healthy Eating Dashboard</title>
+  <style>
+    :root{
+      --bg:#f6f8f4;
+      --card:#ffffff;
+      --ink:#203028;
+      --muted:#5f6f67;
+      --line:#d9e2dc;
+      --accent:#2f7d57;
+      --accent2:#dff3e7;
+      --warn:#fff6dd;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      color:var(--ink);
+      background:var(--bg);
+      line-height:1.4;
+    }
+    .wrap{
+      max-width:1100px;
+      margin:0 auto;
+      padding:24px 16px 56px;
+    }
+    header{
+      background:linear-gradient(135deg,#eaf8ef,#f8fbf7);
+      border:1px solid var(--line);
+      border-radius:20px;
+      padding:24px;
+      margin-bottom:18px;
+    }
+    h1,h2,h3{margin:0 0 10px}
+    p{margin:0 0 10px}
+    .sub{color:var(--muted)}
+    .grid{
+      display:grid;
+      gap:14px;
+    }
+    .cards{
+      grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+      margin-top:16px;
+    }
+    .card{
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:16px;
+      box-shadow:0 2px 10px rgba(0,0,0,.03);
+    }
+    .goal-num{
+      font-size:1.4rem;
+      font-weight:700;
+      color:var(--accent);
+    }
+    nav{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin:18px 0;
+    }
+    .tab-btn{
+      border:1px solid var(--line);
+      background:#fff;
+      color:var(--ink);
+      padding:10px 14px;
+      border-radius:999px;
+      cursor:pointer;
+      font-weight:600;
+    }
+    .tab-btn.active{
+      background:var(--accent);
+      color:#fff;
+      border-color:var(--accent);
+    }
+    .tab{
+      display:none;
+    }
+    .tab.active{
+      display:block;
+    }
+    .section-title{
+      margin:12px 0 14px;
+    }
+    .pill{
+      display:inline-block;
+      padding:4px 9px;
+      border-radius:999px;
+      background:var(--accent2);
+      color:var(--accent);
+      font-size:.82rem;
+      font-weight:700;
+      margin:3px 6px 0 0;
+    }
+    table{
+      width:100%;
+      border-collapse:collapse;
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:16px;
+      overflow:hidden;
+    }
+    th,td{
+      padding:10px 12px;
+      border-bottom:1px solid var(--line);
+      text-align:left;
+      font-size:.96rem;
+      vertical-align:top;
+    }
+    th{
+      background:#f4f8f5;
+      font-size:.9rem;
+    }
+    tr:last-child td{border-bottom:none}
+    .two-col{
+      display:grid;
+      grid-template-columns:1.1fr .9fr;
+      gap:14px;
+    }
+    .recipe{
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:16px;
+    }
+    .recipe ul{
+      margin:10px 0 0 18px;
+      padding:0;
+    }
+    .recipe li{margin:4px 0}
+    .macro{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin-top:12px;
+    }
+    .macro span{
+      background:#f4f8f5;
+      border:1px solid var(--line);
+      border-radius:999px;
+      padding:6px 10px;
+      font-size:.9rem;
+      font-weight:600;
+    }
+    .note{
+      background:var(--warn);
+      border:1px solid #eed991;
+      border-radius:14px;
+      padding:12px 14px;
+      font-size:.94rem;
+    }
+    .checklist{
+      list-style:none;
+      padding:0;
+      margin:0;
+    }
+    .checklist li{
+      padding:8px 0;
+      border-bottom:1px dashed var(--line);
+    }
+    .checklist li:last-child{border-bottom:none}
+    footer{
+      margin-top:18px;
+      color:var(--muted);
+      font-size:.9rem;
+    }
+    @media (max-width: 860px){
+      .two-col{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1>Healthy Eating Dashboard</h1>
+      <p class="sub">Simple grocery staples, mix-and-match meals, and a few recipes built from our conversation.</p>
+      <div class="grid cards" id="goalCards"></div>
+    </header>
+
+    <nav>
+      <button class="tab-btn active" data-tab="goals">Goals</button>
+      <button class="tab-btn" data-tab="grocery">Grocery List</button>
+      <button class="tab-btn" data-tab="recipes">Recipes</button>
+      <button class="tab-btn" data-tab="mixmatch">Mix & Match</button>
+    </nav>
+
+    <section id="goals" class="tab active">
+      <div class="two-col">
+        <div class="card">
+          <h2 class="section-title">Daily targets</h2>
+          <div id="goalPills"></div>
+          <p style="margin-top:12px" class="sub">
+            Focus: get leaner, lose weight gradually, keep protein high, hit fiber daily, and include fermented foods regularly.
+          </p>
+        </div>
+        <div class="card">
+          <h2 class="section-title">Simple rules</h2>
+          <ul class="checklist">
+            <li>✔ Aim for <strong>30–40g protein</strong> in each main meal.</li>
+            <li>✔ Aim for <strong>30g fiber per day</strong>, not necessarily in one meal.</li>
+            <li>✔ Aim for <strong>3 fermented servings per day</strong>.</li>
+            <li>✔ Default pattern: <strong>2 meals + optional snack</strong>.</li>
+            <li>✔ Use fruit + protein or fat for better staying power.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="grocery" class="tab">
+      <div class="card" style="margin-bottom:14px">
+        <h2 class="section-title">Staples to buy most often</h2>
+        <p class="sub">Numbers are rough estimates per common serving.</p>
+      </div>
+      <div id="groceryTables"></div>
+    </section>
+
+    <section id="recipes" class="tab">
+      <div class="grid" id="recipeGrid"></div>
+    </section>
+
+    <section id="mixmatch" class="tab">
+      <div class="two-col">
+        <div class="card">
+          <h2 class="section-title">Breakfast</h2>
+          <div class="pill">Pick 1 protein anchor</div>
+          <div class="pill">Pick 1 fruit</div>
+          <div class="pill">Add seeds or oats for fiber</div>
+          <ul class="checklist" style="margin-top:10px">
+            <li>Either: 3 eggs</li>
+            <li>Or: Greek yogurt / kefir</li>
+            <li>Fiber add-ons: chia, flax, oats, berries, apple</li>
+            <li>Fermented win: yogurt or kefir with live cultures</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h2 class="section-title">Lunch</h2>
+          <div class="pill">Protein + veg + carb + fermented side</div>
+          <ul class="checklist" style="margin-top:10px">
+            <li>Protein: chicken, salmon, dal, black beans, turkey, protein shake if needed</li>
+            <li>Veg: okra, leafy greens, broccolini, kale, beets</li>
+            <li>Carb: roti or potatoes</li>
+            <li>Fermented side: yogurt, kefir, miso, kimchi</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h2 class="section-title">Dinner</h2>
+          <div class="pill">Keep lighter than lunch</div>
+          <ul class="checklist" style="margin-top:10px">
+            <li>Best default: salmon + greens + potatoes + miso</li>
+            <li>Or: eggs + vegetables + yogurt</li>
+            <li>Or: dal + okra/gobi + roti + yogurt</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h2 class="section-title">Snack</h2>
+          <div class="pill">Optional only</div>
+          <ul class="checklist" style="margin-top:10px">
+            <li>Greek yogurt + fruit</li>
+            <li>Fruit + peanut butter</li>
+            <li>Fruit + nuts</li>
+            <li>Kefir if you need protein + fermented support</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="note" style="margin-top:14px">
+        Shortcut: if a meal is short on protein, add a shake. If it is short on fiber, add chia, oats, beans/dal, greens, berries, apple, avocado, or beets. If it is short on fermented food, add yogurt, kefir, miso, or kimchi.
+      </div>
+    </section>
+
+    <footer>
+      Estimates vary by brand and portion size. Edit the data in the script section as you keep refining your foods.
+    </footer>
+  </div>
+
+  <script>
+    const goals = [
+      { label: "Protein target", value: "145g/day", sub: "good default" },
+      { label: "Protein range", value: "130–160g/day", sub: "cut + muscle retention" },
+      { label: "Fiber", value: "30g/day", sub: "daily target" },
+      { label: "Fermented foods", value: "3/day", sub: "servings" },
+      { label: "Per meal protein", value: "30–40g", sub: "main meals" },
+      { label: "Meal pattern", value: "2 + snack", sub: "optional snack" }
+    ];
+
+    const grocerySections = [
+      {
+        title: "Always-buy staples",
+        items: [
+          { name:"Eggs", serving:"3 eggs", protein:18, carbs:1, fiber:0, fermented:"No", notes:"easy breakfast protein" },
+          { name:"Plain Greek yogurt", serving:"1 cup", protein:20, carbs:9, fiber:0, fermented:"Yes", notes:"look for live cultures" },
+          { name:"Plain kefir", serving:"1 cup", protein:10, carbs:12, fiber:0, fermented:"Yes", notes:"easy fermented add-on" },
+          { name:"Salmon", serving:"6 oz cooked", protein:43, carbs:0, fiber:0, fermented:"No", notes:"great dinner staple" },
+          { name:"Chicken breast", serving:"6 oz cooked", protein:45, carbs:0, fiber:0, fermented:"No", notes:"lean lunch staple" },
+          { name:"Oats", serving:"1/2 cup dry", protein:5, carbs:27, fiber:4, fermented:"No", notes:"simple fiber base" },
+          { name:"Chia seeds", serving:"2 tbsp", protein:5, carbs:10, fiber:8, fermented:"No", notes:"fiber booster" },
+          { name:"Ground flaxseed", serving:"1 tbsp", protein:2, carbs:3, fiber:2, fermented:"No", notes:"easy add-in" },
+          { name:"Apples", serving:"1 medium", protein:0, carbs:25, fiber:4, fermented:"No", notes:"portable fruit" },
+          { name:"Berries", serving:"1 cup", protein:1, carbs:21, fiber:8, fermented:"No", notes:"high-fiber fruit" },
+          { name:"Avocado", serving:"1/2 avocado", protein:2, carbs:9, fiber:7, fermented:"No", notes:"great fiber + staying power" }
+        ]
+      },
+      {
+        title: "Mix-and-match proteins",
+        items: [
+          { name:"Lentils / dal", serving:"1 cup cooked", protein:18, carbs:40, fiber:15, fermented:"No", notes:"best vegetarian combo" },
+          { name:"Black beans", serving:"1 cup cooked", protein:15, carbs:40, fiber:15, fermented:"No", notes:"strong fiber anchor" },
+          { name:"Turkey deli meat", serving:"6 slices", protein:12, carbs:2, fiber:0, fermented:"No", notes:"quick add-on" },
+          { name:"Lean beef", serving:"4 oz cooked", protein:28, carbs:0, fiber:0, fermented:"No", notes:"limit but okay" },
+          { name:"Protein powder", serving:"1 scoop", protein:20, carbs:3, fiber:1, fermented:"No", notes:"use when meal is short" },
+          { name:"Peanut butter", serving:"2 tbsp", protein:8, carbs:7, fiber:2, fermented:"No", notes:"snack support" }
+        ]
+      },
+      {
+        title: "Fiber-heavy vegetables and carb sides",
+        items: [
+          { name:"Okra", serving:"1 cup cooked", protein:2, carbs:7, fiber:4, fermented:"No", notes:"great with roti" },
+          { name:"Kale", serving:"1 cup cooked", protein:3, carbs:7, fiber:5, fermented:"No", notes:"best dinner green" },
+          { name:"Broccolini", serving:"1 cup cooked", protein:6, carbs:12, fiber:6, fermented:"No", notes:"good fiber side" },
+          { name:"Leafy greens", serving:"1 cup cooked", protein:2, carbs:6, fiber:3, fermented:"No", notes:"easy lunch add-on" },
+          { name:"Beets", serving:"1 cup cooked", protein:2, carbs:13, fiber:3, fermented:"No", notes:"solid fiber side" },
+          { name:"Whole-wheat roti", serving:"1 roti", protein:3, carbs:18, fiber:3, fermented:"No", notes:"good carb base" },
+          { name:"Mini potatoes", serving:"4 small, skin on", protein:3, carbs:26, fiber:3, fermented:"No", notes:"keep the skin on" }
+        ]
+      },
+      {
+        title: "Fermented extras",
+        items: [
+          { name:"Plain yogurt", serving:"3/4 cup", protein:8, carbs:9, fiber:0, fermented:"Yes", notes:"must say live cultures" },
+          { name:"Miso", serving:"1 tbsp", protein:2, carbs:3, fiber:1, fermented:"Yes", notes:"watch sodium" },
+          { name:"Kimchi", serving:"1/2 cup", protein:1, carbs:4, fiber:2, fermented:"Yes", notes:"easy side" }
+        ]
+      }
+    ];
+
+    const recipes = [
+      {
+        title:"Protein + Fiber Smoothie",
+        meal:"Breakfast",
+        ingredients:[
+          "1 cup plain Greek yogurt",
+          "1 scoop protein powder",
+          "2 tbsp chia seeds",
+          "1 tbsp ground flaxseed",
+          "1 apple",
+          "1/2 cup frozen mango",
+          "1 handful spinach",
+          "Fresh ginger",
+          "Water, milk, or kefir to blend"
+        ],
+        protein:"40–45g",
+        carbs:"40–50g",
+        fiber:"14–18g",
+        fermented:"Yes, if yogurt/kefir has live cultures"
+      },
+      {
+        title:"Overnight Oats",
+        meal:"Breakfast or snack",
+        ingredients:[
+          "1/2 cup oats",
+          "1 cup plain Greek yogurt",
+          "1 tbsp chia seeds",
+          "1 tbsp ground flaxseed",
+          "1/2 to 1 cup berries",
+          "Optional: 1/2 apple, diced",
+          "Splash of milk or kefir if needed"
+        ],
+        protein:"28–32g",
+        carbs:"35–45g",
+        fiber:"12–16g",
+        fermented:"Yes, from yogurt/kefir"
+      },
+      {
+        title:"Lunch Bowl",
+        meal:"Lunch",
+        ingredients:[
+          "1 cup dal or black beans",
+          "1 cup okra",
+          "1 whole-wheat roti",
+          "Leafy greens or beets on the side",
+          "Plain yogurt or kefir",
+          "Optional: protein powder if lunch is short on protein"
+        ],
+        protein:"25–40g",
+        carbs:"55–75g",
+        fiber:"18–25g",
+        fermented:"Yes, if you add yogurt or kefir"
+      },
+      {
+        title:"Salmon Dinner",
+        meal:"Dinner",
+        ingredients:[
+          "5–6 oz salmon",
+          "1 cup kale or broccolini",
+          "4 mini potatoes, skin on",
+          "1 tbsp miso on the side or in broth"
+        ],
+        protein:"45–55g",
+        carbs:"30–40g",
+        fiber:"8–11g",
+        fermented:"Yes, from miso"
+      },
+      {
+        title:"Simple Snack",
+        meal:"Snack",
+        ingredients:[
+          "Greek yogurt + fruit",
+          "or fruit + peanut butter",
+          "or fruit + nuts"
+        ],
+        protein:"8–20g",
+        carbs:"15–30g",
+        fiber:"2–8g",
+        fermented:"Sometimes, if yogurt is used"
+      }
+    ];
+
+    function renderGoals() {
+      const goalCards = document.getElementById("goalCards");
+      const goalPills = document.getElementById("goalPills");
+
+      goalCards.innerHTML = goals.map(g => `
+        <div class="card">
+          <div class="goal-num">${g.value}</div>
+          <div><strong>${g.label}</strong></div>
+          <div class="sub">${g.sub}</div>
+        </div>
+      `).join("");
+
+      goalPills.innerHTML = goals.map(g => `
+        <span class="pill">${g.label}: ${g.value}</span>
+      `).join("");
+    }
+
+    function makeTable(section) {
+      return `
+        <div class="card" style="margin-bottom:14px">
+          <h3>${section.title}</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Food</th>
+                <th>Serving</th>
+                <th>Protein</th>
+                <th>Carbs</th>
+                <th>Fiber</th>
+                <th>Fermented</th>
+                <th>Note</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${section.items.map(item => `
+                <tr>
+                  <td><strong>${item.name}</strong></td>
+                  <td>${item.serving}</td>
+                  <td>${item.protein}g</td>
+                  <td>${item.carbs}g</td>
+                  <td>${item.fiber}g</td>
+                  <td>${item.fermented}</td>
+                  <td>${item.notes}</td>
+                </tr>
+              `).join("")}
+            </tbody>
+          </table>
+        </div>
+      `;
+    }
+
+    function renderGrocery() {
+      const box = document.getElementById("groceryTables");
+      box.innerHTML = grocerySections.map(makeTable).join("");
+    }
+
+    function renderRecipes() {
+      const box = document.getElementById("recipeGrid");
+      box.innerHTML = recipes.map(r => `
+        <div class="recipe">
+          <h3>${r.title}</h3>
+          <p class="sub">${r.meal}</p>
+          <ul>
+            ${r.ingredients.map(i => `<li>${i}</li>`).join("")}
+          </ul>
+          <div class="macro">
+            <span>Protein: ${r.protein}</span>
+            <span>Carbs: ${r.carbs}</span>
+            <span>Fiber: ${r.fiber}</span>
+            <span>Fermented: ${r.fermented}</span>
+          </div>
+        </div>
+      `).join("");
+    }
+
+    document.querySelectorAll(".tab-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+        document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
+        btn.classList.add("active");
+        document.getElementById(btn.dataset.tab).classList.add("active");
+      });
+    });
+
+    renderGoals();
+    renderGrocery();
+    renderRecipes();
+  </script>
+</body>
+</html>
