@@ -170,15 +170,23 @@ h2.page-title{
 body.route-active header.site,
 body.route-active footer{display:none}
 #page-route{
+  display:none;
   min-height:100vh;width:100%;
   background:
     radial-gradient(ellipse 80% 55% at 50% 0%, rgba(42,92,170,.16), transparent 60%),
     radial-gradient(ellipse 70% 45% at 50% 100%, rgba(160,35,52,.12), transparent 60%),
     #121212;
-  display:flex;align-items:center;justify-content:center;
+  align-items:center;justify-content:center;
   padding:7vh 24px;
 }
 #page-route.active{display:flex}
+.route-eyebrow{
+  font-family:'IBM Plex Mono',monospace;font-size:.7rem;
+  letter-spacing:.5em;text-transform:uppercase;text-indent:.5em;
+  color:#5C6875;margin-bottom:4.5vh;
+  opacity:0;animation:vrise .8s .02s cubic-bezier(.2,.7,.3,1) forwards;
+}
+@media (prefers-reduced-motion:reduce){.route-eyebrow{animation:none;opacity:1}}
 .vtimeline{display:flex;flex-direction:column;align-items:center;text-align:center}
 .vitem{
   --vaccent:var(--tile);
@@ -186,19 +194,25 @@ body.route-active footer{display:none}
   opacity:0;transform:translateY(16px);
   animation:vrise .7s cubic-bezier(.2,.7,.3,1) forwards;
 }
-.vitem:nth-child(1){animation-delay:.05s}
-.vitem:nth-child(2){animation-delay:.15s}
-.vitem:nth-child(3){animation-delay:.25s}
-.vitem:nth-child(4){animation-delay:.35s}
-.vitem:nth-child(5){animation-delay:.45s}
-.vitem:nth-child(6){animation-delay:.55s}
+.vitem:nth-child(2){animation-delay:.12s}
+.vitem:nth-child(3){animation-delay:.22s}
+.vitem:nth-child(4){animation-delay:.32s}
+.vitem:nth-child(5){animation-delay:.42s}
+.vitem:nth-child(6){animation-delay:.52s}
+.vitem:nth-child(7){animation-delay:.62s}
 @keyframes vrise{to{opacity:1;transform:none}}
 @media (prefers-reduced-motion:reduce){.vitem{animation:none;opacity:1;transform:none}}
 .vitem .vnode{
   position:static;width:15px;height:15px;color:var(--vaccent);
   margin-bottom:10px;
   filter:drop-shadow(0 0 12px var(--vaccent));
+  animation:starbreathe 4s ease-in-out infinite;
 }
+@keyframes starbreathe{
+  0%,100%{filter:drop-shadow(0 0 8px var(--vaccent))}
+  50%{filter:drop-shadow(0 0 16px var(--vaccent))}
+}
+@media (prefers-reduced-motion:reduce){.vitem .vnode{animation:none}}
 .vitem .vnode::before,.vitem .vnode::after{width:15px;height:15px}
 .vitem a.vcity{
   font-family:'Fraunces',serif;font-weight:700;
@@ -358,6 +372,7 @@ footer{
 <!-- ================= ROUTE (full-screen landing) ================= -->
 <section class="page active" id="page-route">
   <div class="vtimeline">
+    <div class="route-eyebrow">Andalucía · Dec 2026</div>
     <div class="vitem v-porto"><span class="star vnode"></span><a class="vcity" href="#porto">Porto</a><span class="vdates">Dec 7 – 12</span></div>
     <div class="vitem v-seville"><span class="star vnode"></span><a class="vcity" href="#seville">Seville</a><span class="vdates">Dec 12 – 16</span></div>
     <div class="vitem v-cadiz"><span class="star vnode"></span><a class="vcity" href="#cadiz">Cádiz</a><span class="vdates">Dec 16 – 20</span></div>
