@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Andalucía · December 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Karla:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --plaster:#FBFAF5;
+  --ink:#22303A;
+  --ink-soft:#54646F;
+  --tile:#2A5CAA;
+  --tile-deep:#1C3D6E;
+  --tile-wash:#EDF2F9;
+  --saffron:#E9A13B;
+  --saffron-wash:#FBF3E3;
+  --pre:#3E8E7E;   --pre-wash:#E7F2EF;
+  --core:#C4762A;  --core-wash:#FAF0E3;
+  --post:#6B7BA4;  --post-wash:#ECEFF5;
+  --line:#DDD9CE;
+  --card:#FFFFFF;
+  --radius:10px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Karla',sans-serif;
+  background:var(--plaster);
+  color:var(--ink);
+  line-height:1.55;
+  font-size:16px;
+}
+.mono{font-family:'IBM Plex Mono',monospace}
+
+/* ---------- azulejo star (signature) ---------- */
+.star{position:relative;width:14px;height:14px;display:inline-block;flex:none}
+.star::before,.star::after{content:"";position:absolute;inset:0;background:currentColor}
+.star::before{transform:rotate(0deg)}
+.star::after{transform:rotate(45deg)}
+.star.sm{width:9px;height:9px}
+
+/* ---------- header / nav ---------- */
+header.site{
+  background:var(--tile-deep);
+  color:#fff;
+  padding:26px 20px 0;
+}
+.site-inner{max-width:1060px;margin:0 auto}
+.site h1{
+  font-family:'Fraunces',serif;
+  font-weight:700;
+  font-size:clamp(1.7rem,4.5vw,2.6rem);
+  letter-spacing:.01em;
+}
+.site .sub{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:.8rem;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:#BBD0EE;
+  margin-top:4px;
+}
+nav.tabs{
+  max-width:1060px;margin:20px auto 0;
+  display:flex;gap:2px;overflow-x:auto;
+  scrollbar-width:none;
+}
+nav.tabs::-webkit-scrollbar{display:none}
+nav.tabs a{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:.78rem;letter-spacing:.06em;
+  color:#C8D8EF;text-decoration:none;
+  padding:10px 14px;border-radius:8px 8px 0 0;
+  white-space:nowrap;
+}
+nav.tabs a:hover{background:rgba(255,255,255,.08);color:#fff}
+nav.tabs a.active{background:var(--plaster);color:var(--tile-deep);font-weight:600}
+nav.tabs a:focus-visible{outline:2px solid var(--saffron);outline-offset:-2px}
+
+/* ---------- layout ---------- */
+main{max-width:1060px;margin:0 auto;padding:34px 20px 80px}
+section.page{display:none}
+section.page.active{display:block;animation:fade .25s ease}
+@keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){section.page.active{animation:none}}
+
+.eyebrow{
+  display:flex;align-items:center;gap:10px;
+  font-family:'IBM Plex Mono',monospace;
+  font-size:.75rem;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--tile);margin-bottom:10px;
+}
+h2.page-title{
+  font-family:'Fraunces',serif;font-weight:600;
+  font-size:clamp(1.6rem,3.6vw,2.3rem);
+  margin-bottom:6px;
+}
+.page-dates{font-family:'IBM Plex Mono',monospace;color:var(--ink-soft);font-size:.9rem;margin-bottom:20px}
+.lede{max-width:62ch;color:var(--ink-soft);margin-bottom:26px}
+
+/* phase chips */
+.chip{
+  display:inline-block;font-family:'IBM Plex Mono',monospace;
+  font-size:.72rem;letter-spacing:.08em;
+  padding:3px 10px;border-radius:99px;vertical-align:middle;
+}
+.chip.pre{background:var(--pre-wash);color:var(--pre)}
+.chip.core{background:var(--core-wash);color:var(--core)}
+.chip.post{background:var(--post-wash);color:var(--post)}
+
+/* ---------- route ribbon (hero) ---------- */
+.ribbon-wrap{margin:8px 0 34px;overflow-x:auto;padding:10px 2px 4px}
+.ribbon{display:flex;min-width:640px}
+.leg{flex:1;position:relative;padding-top:26px}
+.leg::before{
+  content:"";position:absolute;top:6px;left:0;right:0;height:3px;
+  background:var(--line);
+}
+.leg.pre::before{background:var(--pre)}
+.leg.core::before{background:var(--core)}
+.leg.post::before{background:var(--post)}
+.leg .node{
+  position:absolute;top:0;left:-7px;color:var(--ink);
+}
+.leg.pre .node{color:var(--pre)}
+.leg.core .node{color:var(--core)}
+.leg.post .node{color:var(--post)}
+.leg:last-child{flex:0 0 auto;min-width:90px}
+.leg a{color:inherit;text-decoration:none}
+.leg .city{font-family:'Fraunces',serif;font-weight:600;font-size:1.02rem}
+.leg .city:hover{color:var(--tile)}
+.leg .when{font-family:'IBM Plex Mono',monospace;font-size:.72rem;color:var(--ink-soft)}
+.leg .nights{font-size:.78rem;color:var(--ink-soft)}
+
+/* ---------- cards ---------- */
+.card{
+  background:var(--card);border:1px solid var(--line);
+  border-radius:var(--radius);padding:20px 22px;margin-bottom:18px;
+}
+.card h3{font-family:'Fraunces',serif;font-weight:600;font-size:1.15rem;margin-bottom:8px}
+.card h4{font-size:.95rem;font-weight:700;margin:14px 0 4px}
+.card ul{padding-left:20px;margin:6px 0}
+.card li{margin:4px 0}
+.card p{margin:6px 0}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+@media(max-width:760px){.grid2{grid-template-columns:1fr}}
+
+.hotel-status{
+  font-family:'IBM Plex Mono',monospace;font-size:.72rem;letter-spacing:.06em;
+  padding:2px 9px;border-radius:99px;margin-left:8px;vertical-align:middle;
+}
+.hotel-status.booked{background:#E4F1E6;color:#2E7D46}
+.hotel-status.chosen{background:var(--tile-wash);color:var(--tile)}
+.hotel-status.deciding{background:var(--saffron-wash);color:#B07514}
+
+/* travel leg banner */
+.travel{
+  display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px;
+  background:var(--tile-wash);border:1px solid #D4E0F0;
+  border-radius:var(--radius);padding:14px 18px;margin:0 0 22px;
+  font-size:.92rem;
+}
+.travel .mode{font-family:'IBM Plex Mono',monospace;font-weight:600;color:var(--tile-deep)}
+.travel .dur{font-family:'IBM Plex Mono',monospace;color:var(--ink-soft)}
+
+/* ---------- day tables ---------- */
+.daytable-wrap{overflow-x:auto;margin:6px 0 26px;border:1px solid var(--line);border-radius:var(--radius);background:var(--card)}
+table.daytable{border-collapse:collapse;width:100%;min-width:760px;font-size:.9rem}
+table.daytable th{
+  font-family:'IBM Plex Mono',monospace;font-size:.72rem;letter-spacing:.1em;
+  text-transform:uppercase;text-align:left;color:#fff;background:var(--tile);
+  padding:10px 14px;
+}
+table.daytable td{padding:12px 14px;border-top:1px solid var(--line);vertical-align:top}
+table.daytable td.day{
+  font-family:'IBM Plex Mono',monospace;font-size:.78rem;white-space:nowrap;
+  color:var(--tile-deep);font-weight:600;background:var(--tile-wash);
+}
+table.daytable td.day .theme{display:block;font-family:'Karla',sans-serif;font-weight:700;font-size:.85rem;color:var(--ink);margin-top:2px;white-space:normal}
+table.daytable tr:nth-child(even) td:not(.day){background:#FBFAF6}
+
+/* overview table */
+table.overview{border-collapse:collapse;width:100%;min-width:680px;font-size:.9rem}
+table.overview th{
+  font-family:'IBM Plex Mono',monospace;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;
+  text-align:left;background:var(--ink);color:#fff;padding:10px 14px;
+}
+table.overview td{padding:11px 14px;border-top:1px solid var(--line);vertical-align:top}
+table.overview td:first-child{font-family:'IBM Plex Mono',monospace;font-size:.8rem;white-space:nowrap}
+tr.row-pre td{background:var(--pre-wash)}
+tr.row-core td{background:var(--core-wash)}
+tr.row-post td{background:var(--post-wash)}
+table.overview a{color:var(--tile-deep);font-weight:700;text-decoration:none}
+table.overview a:hover{text-decoration:underline}
+
+/* checklist */
+.check{list-style:none;padding:0}
+.check li{
+  display:flex;gap:12px;align-items:flex-start;
+  padding:12px 4px;border-bottom:1px solid var(--line);
+}
+.check li:last-child{border-bottom:none}
+.check input[type=checkbox]{
+  width:18px;height:18px;margin-top:2px;accent-color:var(--tile);flex:none;
+}
+.check .pri{
+  font-family:'IBM Plex Mono',monospace;font-size:.68rem;letter-spacing:.08em;
+  padding:2px 8px;border-radius:99px;flex:none;margin-top:2px;
+}
+.pri.p1{background:#F6E3DE;color:#A63B22}
+.pri.p2{background:var(--saffron-wash);color:#B07514}
+.pri.p3{background:var(--tile-wash);color:var(--tile)}
+.check b{font-weight:700}
+.check .note{display:block;color:var(--ink-soft);font-size:.88rem}
+
+a.ext{color:var(--tile);font-weight:700;text-decoration:none;border-bottom:1px solid #B9CCE8}
+a.ext:hover{color:var(--tile-deep)}
+
+.callout{
+  border-left:4px solid var(--saffron);background:var(--saffron-wash);
+  border-radius:6px;padding:12px 16px;margin:14px 0;font-size:.92rem;
+}
+.callout.blue{border-left-color:var(--tile);background:var(--tile-wash)}
+
+footer{
+  text-align:center;font-family:'IBM Plex Mono',monospace;font-size:.75rem;
+  color:var(--ink-soft);padding:26px 16px 40px;border-top:1px solid var(--line);
+}
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="site-inner">
+    <h1>Andalucía, December 2026</h1>
+    <div class="sub">Porto → Seville → Cádiz → Ronda → Granada → Madrid · Dec 6–28</div>
+  </div>
+  <nav class="tabs" id="tabs">
+    <a href="#overview" data-page="overview" class="active">Overview</a>
+    <a href="#porto" data-page="porto">Porto</a>
+    <a href="#seville" data-page="seville">Seville</a>
+    <a href="#cadiz" data-page="cadiz">Cádiz</a>
+    <a href="#ronda" data-page="ronda">Ronda</a>
+    <a href="#granada" data-page="granada">Granada</a>
+    <a href="#madrid" data-page="madrid">Madrid</a>
+    <a href="#prep" data-page="prep">Prep &amp; Bookings</a>
+  </nav>
+</header>
+
+<main>
+<!-- ================= OVERVIEW ================= -->
+<section class="page active" id="page-overview">
+  <div class="eyebrow"><span class="star sm"></span> The route</div>
+  <h2 class="page-title">Twenty-two nights, six cities</h2>
+  <p class="lede">A pre-trip stop in Porto, then the core group trip through Seville, Cádiz, Ronda, and Granada — plazas, seafood, white villages, and the Alhambra — before an overnight in Madrid and the flight home on Dec 28.</p>
+
+  <div class="ribbon-wrap" aria-label="Trip route">
+    <div class="ribbon">
+      <div class="leg pre"><span class="star node"></span><a href="#porto"><span class="city">Porto</span></a><span class="when">Dec 7–12</span><br><span class="nights">5 nights · pre-trip</span></div>
+      <div class="leg core"><span class="star node"></span><a href="#seville"><span class="city">Seville</span></a><span class="when">Dec 12–16</span><br><span class="nights">4 nights</span></div>
+      <div class="leg core"><span class="star node"></span><a href="#cadiz"><span class="city">Cádiz</span></a><span class="when">Dec 16–20</span><br><span class="nights">4 nights</span></div>
+      <div class="leg core"><span class="star node"></span><a href="#ronda"><span class="city">Ronda</span></a><span class="when">Dec 20–23</span><br><span class="nights">3 nights</span></div>
+      <div class="leg core"><span class="star node"></span><a href="#granada"><span class="city">Granada</span></a><span class="when">Dec 23–27</span><br><span class="nights">4 nights</span></div>
+      <div class="leg post"><span class="star node"></span><a href="#madrid"><span class="city">Madrid</span></a><span class="when">Dec 27–28</span><br><span class="nights">1 night · fly home</span></div>
+    </div>
+  </div>
+
+  <div class="daytable-wrap">
+  <table class="overview">
+    <thead><tr><th>Dates</th><th>Location</th><th>Nights</th><th>Getting there</th><th>Phase</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr class="row-pre"><td>Dec 6–7</td><td>En route</td><td>1</td><td>Flight</td><td><span class="chip pre">Pre-trip</span></td><td>Travel to Porto</td></tr>
+      <tr class="row-pre"><td>Dec 7–12</td><td><a href="#porto">Porto</a></td><td>5</td><td>—</td><td><span class="chip pre">Pre-trip</span></td><td>Independent stop before meeting the group in Seville</td></tr>
+      <tr class="row-core"><td>Dec 12–16</td><td><a href="#seville">Seville</a></td><td>4</td><td>Flight / train</td><td><span class="chip core">Core group</span></td><td>Plazas, tapas bars, Christmas lights</td></tr>
+      <tr class="row-core"><td>Dec 16–20</td><td><a href="#cadiz">Cádiz</a></td><td>4</td><td>Train · 1h 45m</td><td><span class="chip core">Core group</span></td><td>Coastal town hopping and seafood</td></tr>
+      <tr class="row-core"><td>Dec 20–23</td><td><a href="#ronda">Ronda</a></td><td>3</td><td>Rental car · 2h 30m (6–7h scenic)</td><td><span class="chip core">Core group</span></td><td>Bridge walks, bodegas, White Villages</td></tr>
+      <tr class="row-core"><td>Dec 23–27</td><td><a href="#granada">Granada</a></td><td>4</td><td>Rental car · 2h 30m</td><td><span class="chip core">Core group</span></td><td>The Alhambra, tapas, Christmas in Granada</td></tr>
+      <tr class="row-post"><td>Dec 27–28</td><td><a href="#madrid">Madrid</a></td><td>1</td><td>AVE train · 3h 30m</td><td><span class="chip post">Post</span></td><td>Stay near the airport for next-day flight</td></tr>
+      <tr class="row-post"><td>Dec 28</td><td>Depart</td><td>—</td><td>Flight</td><td><span class="chip post">Post</span></td><td>Return flight home</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <h3>Who's coming</h3>
+      <ul>
+        <li><b>Seville &amp; Cádiz:</b> 8 adults + 2 children (ages 4 and 6)</li>
+        <li><b>Ronda &amp; Granada:</b> 6 adults + 1 child (age 4)</li>
+        <li>Porto and Madrid legs are independent travel.</li>
+      </ul>
+      <p class="callout blue" style="margin-bottom:0">Group size changes mid-trip — double-check headcounts before booking restaurants and guides.</p>
+    </div>
+    <div class="card">
+      <h3>Hotels at a glance</h3>
+      <ul>
+        <li><b>Porto:</b> InterContinental Porto – Palácio das Cardosas <span class="hotel-status chosen">chosen</span></li>
+        <li><b>Seville:</b> H10 Casa de la Plata <span class="hotel-status chosen">chosen</span></li>
+        <li><b>Cádiz:</b> shortlist of 4–5 <span class="hotel-status deciding">deciding</span></li>
+        <li><b>Ronda:</b> Catalonia Ronda recommended <span class="hotel-status deciding">deciding</span></li>
+        <li><b>Granada:</b> split stay — Parador + Meliá <span class="hotel-status deciding">book early</span></li>
+        <li><b>Madrid:</b> airport-area hotel <span class="hotel-status deciding">to book</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="callout"><b>Top priority right now:</b> Alhambra tickets for <span class="mono">Dec 24</span> (it's closed Dec 25) and the Parador de Granada, which sells out far in advance. See <a class="ext" href="#prep">Prep &amp; Bookings</a>.</div>
+</section>
+
+<!-- ================= PORTO ================= -->
+<section class="page" id="page-porto">
+  <div class="eyebrow"><span class="star sm"></span> Pre-trip <span class="chip pre">Independent</span></div>
+  <h2 class="page-title">Porto</h2>
+  <div class="page-dates">Dec 7–12 · 5 nights</div>
+  <p class="lede">A relaxed solo/pre-group stop before flying on to meet everyone in Seville on Dec 12.</p>
+
+  <div class="card">
+    <h3>Hotel <span class="hotel-status chosen">chosen</span></h3>
+    <p><b>InterContinental Porto – Palácio das Cardosas (IHG)</b> — a converted palace on Praça da Liberdade, right in the center.</p>
+  </div>
+
+  <div class="card">
+    <h3>Ideas for the week <span class="hotel-status deciding">unscheduled</span></h3>
+    <ul>
+      <li>Ribeira riverfront and Dom Luís I Bridge at sunset</li>
+      <li>Port lodge tastings across the river in Vila Nova de Gaia</li>
+      <li>Livraria Lello, São Bento station tiles, Clérigos Tower</li>
+      <li>Day trip up the Douro Valley (train or driver-guide)</li>
+      <li>Francesinha at least once — this is the city for it</li>
+    </ul>
+    <p class="callout" style="margin-bottom:0">Nothing locked in for Porto yet — treat this as an open week and book the Douro day trip if the weather looks good.</p>
+  </div>
+
+  <div class="travel"><span class="mode">Next → Seville, Dec 12</span><span class="dur">Short flight or Porto→Vigo/Seville connections · book ahead</span></div>
+</section>
+
+<!-- ================= SEVILLE ================= -->
+<section class="page" id="page-seville">
+  <div class="eyebrow"><span class="star sm"></span> Core group trip <span class="chip core">8 adults + 2 kids</span></div>
+  <h2 class="page-title">Seville</h2>
+  <div class="page-dates">Dec 12–16 · 4 nights · H10 Casa de la Plata</div>
+  <p class="lede">Royal palaces, tapas streets, and the best Christmas lights in Spain — all walkable from a central hotel. The pace: sightseeing in the morning, long lunch, rest, then evening lights and tapas.</p>
+
+  <div class="card">
+    <h3>Hotel <span class="hotel-status chosen">chosen</span></h3>
+    <p><b>H10 Casa de la Plata</b> — excellent central location within walking distance of the Alcázar, Cathedral, and the main shopping streets.</p>
+  </div>
+
+  <div class="daytable-wrap">
+  <table class="daytable">
+    <thead><tr><th>Day</th><th>Morning</th><th>Lunch</th><th>Afternoon</th><th>Evening</th></tr></thead>
+    <tbody>
+      <tr>
+        <td class="day">Fri Dec 12<span class="theme">Arrival</span></td>
+        <td>Arrive &amp; check in</td>
+        <td>Easy tapas near the hotel</td>
+        <td>Relaxed walk: Plaza del Salvador → Calle Sierpes → Plaza Nueva → Av. de la Constitución for Christmas lights</td>
+        <td>Dinner at <a class="ext" href="https://www.elrinconcillo.es/en/contact/">El Rinconcillo</a> or <a class="ext" href="https://labrunildatapas.com">La Brunilda</a>, then churros &amp; hot chocolate</td>
+      </tr>
+      <tr>
+        <td class="day">Sat Dec 13<span class="theme">Royal Seville</span></td>
+        <td>Royal Alcázar — book the <b>first morning entry</b>; gardens, fountains, peacocks</td>
+        <td>Casa Román or Bodega Santa Cruz</td>
+        <td>Santa Cruz quarter → Plaza de España → María Luisa Park (optional rowboats for the kids)</td>
+        <td>Optional flamenco show, Christmas lights &amp; dessert</td>
+      </tr>
+      <tr>
+        <td class="day">Sun Dec 14<span class="theme">Cathedral &amp; Triana</span></td>
+        <td>Seville Cathedral + climb the Giralda Tower</td>
+        <td>Mercado de Triana</td>
+        <td>Triana ceramics shops, river walk; optional Las Setas (Metropol Parasol) at sunset</td>
+        <td>Dinner at Abades Triana with river views</td>
+      </tr>
+      <tr>
+        <td class="day">Mon Dec 15<span class="theme">Relaxed day</span></td>
+        <td>Café breakfast, shopping in the historic center</td>
+        <td>Casa Morales</td>
+        <td>Parks, plazas, or rest at the hotel · optional Córdoba day trip if the group wants it</td>
+        <td>Farewell tapas dinner</td>
+      </tr>
+      <tr>
+        <td class="day">Tue Dec 16<span class="theme">To Cádiz</span></td>
+        <td>Breakfast + one last walk around Plaza del Salvador</td>
+        <td colspan="3">Depart 10:00–11:00 AM for Cádiz by train (1h 45m) or private transfer</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <h3>Reservations for Seville</h3>
+      <ul>
+        <li>Royal Alcázar — first-entry slot</li>
+        <li>Seville Cathedral &amp; Giralda</li>
+        <li>Flamenco show (optional)</li>
+        <li>Group dinners: El Rinconcillo / La Brunilda, Abades Triana</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Daily rhythm</h3>
+      <ul>
+        <li><span class="mono">9:30–12:00</span> — sightseeing</li>
+        <li><span class="mono">12:30–2:30</span> — long lunch</li>
+        <li><span class="mono">2:30–5:00</span> — rest / free time</li>
+        <li><span class="mono">5:30–8:00</span> — evening walk, lights, tapas</li>
+      </ul>
+      <p style="color:var(--ink-soft);font-size:.9rem">Keeps sightseeing enjoyable with plenty of downtime for the kids.</p>
+    </div>
+  </div>
+
+  <div class="travel"><span class="mode">Next → Cádiz, Dec 16</span><span class="dur">Train · 1h 45m · depart late morning</span></div>
+</section>
+<!-- ================= CADIZ ================= -->
+<section class="page" id="page-cadiz">
+  <div class="eyebrow"><span class="star sm"></span> Core group trip <span class="chip core">8 adults + 2 kids</span></div>
+  <h2 class="page-title">Cádiz</h2>
+  <div class="page-dates">Dec 16–20 · 4 nights</div>
+  <p class="lede">Europe's oldest city: coastal town hopping, cultural immersion, and serious seafood. The hotel is still being decided — day plans stay loose until it's locked.</p>
+
+  <div class="card">
+    <h3>Hotel shortlist <span class="hotel-status deciding">deciding</span></h3>
+    <ul>
+      <li><b>Parador de Cádiz</b> — on the beach; own underground parking (~$21/day)</li>
+      <li><b>Casual con Duende Cádiz</b> — #1 on TripAdvisor; old-town location</li>
+      <li><b>Hotel Cádiz Paseo del Mar</b> — on the beach, further from the city center</li>
+      <li><b>Casa Alameda</b></li>
+      <li><b>Meliá Collection</b> — only if the 3-person pricing turns out to not be $25k</li>
+    </ul>
+    <h4>Parking</h4>
+    <p>Public parking is easy: Muelle Reina Sofía or the SABA garage at the train station, both under $12/day.</p>
+  </div>
+
+  <div class="daytable-wrap">
+  <table class="daytable">
+    <thead><tr><th>Day</th><th>Morning</th><th>Lunch</th><th>Afternoon</th><th>Evening</th></tr></thead>
+    <tbody>
+      <tr>
+        <td class="day">Tue Dec 16<span class="theme">Arrival</span></td>
+        <td>Train from Seville</td>
+        <td>Seafood lunch near the market</td>
+        <td>Check in, stroll La Caleta beach and the seafront</td>
+        <td>Easy tapas night in the old town</td>
+      </tr>
+      <tr>
+        <td class="day">Wed Dec 17<span class="theme">Old Cádiz · draft</span></td>
+        <td>Old town: Cathedral, Torre Tavira camera obscura, Mercado Central</td>
+        <td>Fried fish in the La Viña quarter</td>
+        <td>Plazas and seafront walls; playground time for the kids</td>
+        <td>Sunset at La Caleta, dinner out</td>
+      </tr>
+      <tr>
+        <td class="day">Thu Dec 18<span class="theme">Coast day · draft</span></td>
+        <td>Day trip: El Puerto de Santa María or Vejer de la Frontera</td>
+        <td>Lunch on the coast</td>
+        <td>Beach time or sherry bodega visit</td>
+        <td>Back to Cádiz, relaxed dinner</td>
+      </tr>
+      <tr>
+        <td class="day">Fri Dec 19<span class="theme">Flex day · draft</span></td>
+        <td>Slow morning, café breakfast</td>
+        <td>Long group lunch</td>
+        <td>Shopping, Christmas lights, rest</td>
+        <td>Farewell-to-the-coast seafood dinner</td>
+      </tr>
+      <tr>
+        <td class="day">Sat Dec 20<span class="theme">To Ronda</span></td>
+        <td colspan="4">Pick up rental cars and take the scenic White Villages route to Ronda — see the <a class="ext" href="#ronda">Ronda page</a> for the full driving day</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+  <p class="callout">Days marked <b>draft</b> are suggestions to react to — nothing here is booked yet. Firm plans can slot in once the hotel is chosen.</p>
+
+  <div class="travel"><span class="mode">Next → Ronda, Dec 20</span><span class="dur">Rental car · 3.5–4h driving · 6–7h with scenic stops</span></div>
+</section>
+
+<!-- ================= RONDA ================= -->
+<section class="page" id="page-ronda">
+  <div class="eyebrow"><span class="star sm"></span> Core group trip <span class="chip core">6 adults + 1 child</span></div>
+  <h2 class="page-title">Ronda</h2>
+  <div class="page-dates">Dec 20–23 · 3 nights</div>
+  <p class="lede">Perched above the El Tajo gorge and famous for wine, mushrooms, and pastry. Three nights at a relaxed pace: the town itself, a white-village day trip, and a winery afternoon.</p>
+
+  <div class="card">
+    <h3>Arrival day — the scenic route <span class="mono" style="font-size:.8rem;color:var(--ink-soft)">Sat Dec 20</span></h3>
+    <p>Skip the fast highway and drive through Sierra de Grazalema Natural Park:</p>
+    <p class="mono" style="font-size:.85rem">Cádiz → Arcos de la Frontera (optional) → Grazalema → Ronda</p>
+    <ul>
+      <li><b>Mirador Puerto de las Palomas</b> — panoramic mountain views</li>
+      <li><b>Grazalema</b> — the lunch stop: payoyo cheese, Iberian pork, lamb, seasonal mushrooms, local wine</li>
+      <li><b>Zahara de la Sierra</b> — optional stop over the turquoise reservoir</li>
+    </ul>
+    <p>Arrive in Ronda around 4–5 PM, check in, sunset walk across Puente Nuevo, dinner in town.</p>
+  </div>
+
+  <div class="daytable-wrap">
+  <table class="daytable">
+    <thead><tr><th>Day</th><th>Morning</th><th>Lunch</th><th>Afternoon</th><th>Evening</th></tr></thead>
+    <tbody>
+      <tr>
+        <td class="day">Sat Dec 20<span class="theme">White Villages drive</span></td>
+        <td>Depart Cádiz, mountain route</td>
+        <td>Grazalema</td>
+        <td>Zahara stop · arrive Ronda 4–5 PM</td>
+        <td>Sunset at Puente Nuevo, dinner in the old town</td>
+      </tr>
+      <tr>
+        <td class="day">Sun Dec 21<span class="theme">Ronda itself</span></td>
+        <td>Puente Nuevo viewpoints, historic old town</td>
+        <td>Tapas in town</td>
+        <td>Plaza de Toros, Alameda del Tajo; Arab Baths (skip Casa del Rey Moro's stairs with the stroller)</td>
+        <td>Rooftop drinks, relaxed dinner</td>
+      </tr>
+      <tr>
+        <td class="day">Mon Dec 22<span class="theme">Setenil &amp; wine</span></td>
+        <td>Day trip to Setenil de las Bodegas — houses built into the rock</td>
+        <td>Lunch in Setenil under the overhangs</td>
+        <td>Wine tasting at <b>Bodega La Melonera</b></td>
+        <td>Final Ronda dinner</td>
+      </tr>
+      <tr>
+        <td class="day">Tue Dec 23<span class="theme">To Granada</span></td>
+        <td>Breakfast in Ronda</td>
+        <td colspan="3">Drive to Granada (~2.5h) with an optional scenic stop in Montefrío · return rental cars on arrival</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="card">
+    <h3>Where to stay <span class="hotel-status deciding">deciding</span></h3>
+    <h4>1 · Catalonia Ronda — recommended</h4>
+    <ul>
+      <li>Cheapest of the serious options; ~$33 upcharge for kids</li>
+      <li>Modern rooms, elevator, predictable comfort — easiest with a child</li>
+      <li>Next to the Plaza de Toros; the best rooftop bar in town for after bedtime</li>
+      <li>Trade-off: less historic charm</li>
+    </ul>
+    <h4>2 · Parador de Ronda</h4>
+    <ul>
+      <li>Iconic location with spectacular gorge and bridge views</li>
+      <li>Inside the restricted traffic zone — must send car registration to the hotel in advance</li>
+    </ul>
+    <h4>3 · Catalonia Reina Victoria</h4>
+    <ul>
+      <li>Spacious modern rooms, gardens, amazing gorge views, easy paid on-site parking</li>
+      <li>~10-minute easy walk to the bridge; much easier with a stroller than deep old town</li>
+      <li>Quirk: sink sits outside the bathroom in standard rooms; only suites have fully separated bathrooms</li>
+    </ul>
+    <h4>Also considered</h4>
+    <ul>
+      <li>Hotel Montelirio (bridge view), Arc de Ronda, Hotel La Fuente de la Higuera (villas of 3/5/8 bedrooms, outside town), <a class="ext" href="https://hotelpalaciodehemingway.com/#habitaciones">Hotel Palacio de Hemingway</a> (center of town, €15/day parking 8 min away)</li>
+    </ul>
+    <h4>Alternative: La Melonera villas</h4>
+    <p>4-bed winery villa or 3-bed lodge in the valley — beautiful, private, great for group dinners in, but 10–15 min drive to town every time and you miss the evening ambiance. Depends partly on whether Kiran comes to Ronda. <b>Recommendation: stay in town, visit La Melonera for an afternoon tasting instead.</b></p>
+  </div>
+
+  <div class="travel"><span class="mode">Next → Granada, Dec 23</span><span class="dur">Rental car · ~2h 30m · return cars on arrival</span></div>
+</section>
+<!-- ================= GRANADA ================= -->
+<section class="page" id="page-granada">
+  <div class="eyebrow"><span class="star sm"></span> Core group trip <span class="chip core">6 adults + 1 child</span></div>
+  <h2 class="page-title">Granada</h2>
+  <div class="page-dates">Dec 23–27 · 4 nights · split stay</div>
+  <p class="lede">Christmas in Granada: two nights sleeping inside the Alhambra, then two nights in the center for the tapas scene. Cars go back on arrival — this city is for walking and taxis.</p>
+
+  <div class="grid2">
+    <div class="card">
+      <h3>Nights 1–2 · Parador de Granada <span class="hotel-status deciding">book early</span></h3>
+      <p class="mono" style="font-size:.8rem;color:var(--ink-soft)">Dec 23–25</p>
+      <ul>
+        <li>Inside the Alhambra grounds — a former Nasrid palace/convent</li>
+        <li>Walk the grounds early morning and after the crowds leave</li>
+        <li>Makes Alhambra day effortless; easy retreat if the 4-year-old needs a break</li>
+        <li>Trade-off: removed from the city at night (taxis down for dinner); rooms are special more for history than luxury</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Nights 3–4 · Meliá Granada <span class="hotel-status deciding">to book</span></h3>
+      <p class="mono" style="font-size:.8rem;color:var(--ink-soft)">Dec 25–27</p>
+      <ul>
+        <li>Central, near the Cathedral and tapas streets — walk back quickly after dinner with the child</li>
+        <li>Larger, more modern rooms than most historic hotels</li>
+        <li>Better Christmas atmosphere and evening energy</li>
+        <li>Easy taxi to the train station on departure day</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="daytable-wrap">
+  <table class="daytable">
+    <thead><tr><th>Day</th><th>Morning</th><th>Lunch</th><th>Afternoon</th><th>Evening</th></tr></thead>
+    <tbody>
+      <tr>
+        <td class="day">Tue Dec 23<span class="theme">Arrive from Ronda</span></td>
+        <td>Drive (~2.5h), optional Montefrío stop</td>
+        <td>Light lunch on arrival</td>
+        <td>Return rental cars → taxi to the Parador → check in</td>
+        <td>Alhambra gardens at sunset, relaxed dinner (Parador or taxi into town)</td>
+      </tr>
+      <tr>
+        <td class="day">Wed Dec 24<span class="theme">Alhambra day</span></td>
+        <td>Nasrid Palaces (morning slot), Generalife, Alcazaba — allow 4–5h, private guide recommended</td>
+        <td>Lunch on the grounds / Parador</td>
+        <td>Rest at the hotel, gardens</td>
+        <td>Casual tapas in town if everyone has energy</td>
+      </tr>
+      <tr>
+        <td class="day">Thu Dec 25<span class="theme">Christmas Day</span></td>
+        <td>Check out, move to Meliá Granada · taxi up to Mirador de San Nicolás</td>
+        <td><b>Christmas lunch — reserve well in advance</b></td>
+        <td>Walk downhill through the Albaicín (taxi up, walk down — no uphill with the 4-year-old)</td>
+        <td>Hot chocolate &amp; churros, easy night</td>
+      </tr>
+      <tr>
+        <td class="day">Fri Dec 26<span class="theme">Historic Granada</span></td>
+        <td>Granada Cathedral, Royal Chapel</td>
+        <td>Tapas crawl begins</td>
+        <td>Alcaicería market, shopping, tea house</td>
+        <td>Granada's famous tapas scene — flexible night, no rush</td>
+      </tr>
+      <tr>
+        <td class="day">Sat Dec 27<span class="theme">To Madrid</span></td>
+        <td>Breakfast</td>
+        <td colspan="3">Taxi to the station → AVE train to Madrid (3h 30m)</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <h3>Restaurants to prioritize</h3>
+      <h4>Traditional</h4>
+      <ul><li>Los Manueles</li><li>Las Tomasas</li><li>Carmen Mirador de Aixa</li></ul>
+      <h4>Tapas</h4>
+      <ul><li>Bodegas Castañeda</li><li>La Tana</li></ul>
+    </div>
+    <div class="card">
+      <h3>Alhambra tickets</h3>
+      <p>Go on <b>Dec 24</b> — the Alhambra is closed Dec 25, and Dec 26 is the built-in chill day.</p>
+      <p>Only buy from the official site: <a class="ext" href="https://tickets.alhambra-patronato.es/en/">tickets.alhambra-patronato.es</a></p>
+      <p style="color:var(--ink-soft);font-size:.9rem">Book the moment tickets are released; schedule the Nasrid Palaces for the morning. A private guide makes it much better with a group of seven.</p>
+    </div>
+  </div>
+
+  <div class="travel"><span class="mode">Next → Madrid, Dec 27</span><span class="dur">AVE high-speed train · 3h 30m</span></div>
+</section>
+
+<!-- ================= MADRID ================= -->
+<section class="page" id="page-madrid">
+  <div class="eyebrow"><span class="star sm"></span> Post-trip <span class="chip post">Wind-down</span></div>
+  <h2 class="page-title">Madrid</h2>
+  <div class="page-dates">Dec 27–28 · 1 night</div>
+  <p class="lede">A practical overnight: arrive by AVE in the afternoon, stay near the airport, fly home Dec 28.</p>
+  <div class="card">
+    <h3>The plan</h3>
+    <ul>
+      <li><b>Dec 27:</b> AVE from Granada arrives mid/late afternoon · check in near Barajas airport <span class="hotel-status deciding">to book</span></li>
+      <li>Optional: an easy evening in the center (Plaza Mayor Christmas market, one last tapas dinner) if energy allows</li>
+      <li><b>Dec 28:</b> return flight home</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ================= PREP ================= -->
+<section class="page" id="page-prep">
+  <div class="eyebrow"><span class="star sm"></span> Before we go</div>
+  <h2 class="page-title">Prep &amp; Bookings</h2>
+  <p class="lede">Everything to lock in before departure, roughly in priority order. Checkboxes are just for reference while reading — they don't save.</p>
+
+  <div class="card">
+    <h3>The checklist</h3>
+    <ul class="check">
+      <li><input type="checkbox" id="c1"><span class="pri p1">NOW</span><label for="c1"><b>Alhambra tickets — Dec 24, Nasrid Palaces morning slot.</b><span class="note">Official site only: <a class="ext" href="https://tickets.alhambra-patronato.es/en/">tickets.alhambra-patronato.es</a>. Sells out; book at release. Closed Dec 25.</span></label></li>
+      <li><input type="checkbox" id="c2"><span class="pri p1">NOW</span><label for="c2"><b>Parador de Granada — Dec 23–25.</b><span class="note">Very limited availability; this is the hardest hotel booking of the trip.</span></label></li>
+      <li><input type="checkbox" id="c3"><span class="pri p1">NOW</span><label for="c3"><b>Passports valid 3+ months beyond Dec 28.</b><span class="note">Everyone checks now — renewals take weeks. Also check whether ETIAS travel authorization is in effect for Spain/Portugal by December.</span></label></li>
+      <li><input type="checkbox" id="c4"><span class="pri p2">SOON</span><label for="c4"><b>Christmas Day lunch in Granada.</b><span class="note">Dec 25 reservations go early — book as soon as the group size is confirmed (7 people).</span></label></li>
+      <li><input type="checkbox" id="c5"><span class="pri p2">SOON</span><label for="c5"><b>Decide the Cádiz hotel.</b><span class="note">Shortlist on the <a class="ext" href="#cadiz">Cádiz page</a>. Day plans firm up once this is set.</span></label></li>
+      <li><input type="checkbox" id="c6"><span class="pri p2">SOON</span><label for="c6"><b>Book the Ronda hotel.</b><span class="note">Catalonia Ronda recommended. If Parador de Ronda instead: send car registration in advance for the restricted traffic zone.</span></label></li>
+      <li><input type="checkbox" id="c7"><span class="pri p2">SOON</span><label for="c7"><b>Trains on Renfe.</b><span class="note">Seville→Cádiz (Dec 16) and Granada→Madrid AVE (Dec 27). Book when fares open at <a class="ext" href="https://www.renfe.com/es/en">renfe.com</a>.</span></label></li>
+      <li><input type="checkbox" id="c8"><span class="pri p2">SOON</span><label for="c8"><b>Rental cars: pick up Cádiz Dec 20 → return Granada Dec 23.</b><span class="note">One-way rental for the group. Returning on arrival in Granada avoids all parking hassle.</span></label></li>
+      <li><input type="checkbox" id="c9"><span class="pri p3">LATER</span><label for="c9"><b>Royal Alcázar first-entry tickets + Seville Cathedral &amp; Giralda.</b><span class="note">Book the Alcázar's first morning slot for Dec 13.</span></label></li>
+      <li><input type="checkbox" id="c10"><span class="pri p3">LATER</span><label for="c10"><b>Private Alhambra guide for Dec 24.</b><span class="note">Strongly recommended for 6 adults + a 4-year-old.</span></label></li>
+      <li><input type="checkbox" id="c11"><span class="pri p3">LATER</span><label for="c11"><b>Group dinner reservations.</b><span class="note">Abades Triana (Seville), El Rinconcillo / La Brunilda, flamenco show, La Melonera wine tasting (Ronda).</span></label></li>
+      <li><input type="checkbox" id="c12"><span class="pri p3">LATER</span><label for="c12"><b>Meliá Granada (Dec 25–27) + Madrid airport hotel (Dec 27).</b><span class="note">Easier bookings, but Christmas week fills up.</span></label></li>
+    </ul>
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <h3>Booking links</h3>
+      <ul>
+        <li>Alhambra (official only): <a class="ext" href="https://tickets.alhambra-patronato.es/en/">tickets.alhambra-patronato.es</a></li>
+        <li>Trains: <a class="ext" href="https://www.renfe.com/es/en">renfe.com</a></li>
+        <li>El Rinconcillo: <a class="ext" href="https://www.elrinconcillo.es/en/contact/">elrinconcillo.es</a></li>
+        <li>La Brunilda: <a class="ext" href="https://labrunildatapas.com">labrunildatapas.com</a></li>
+        <li>Hotel Palacio de Hemingway (Ronda option): <a class="ext" href="https://hotelpalaciodehemingway.com/#habitaciones">hotelpalaciodehemingway.com</a></li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Good to know</h3>
+      <ul>
+        <li><b>Cádiz parking:</b> Muelle Reina Sofía or SABA train-station garage, both &lt;$12/day; Parador has its own garage (~$21)</li>
+        <li><b>Ronda ZTL:</b> Parador is inside the restricted traffic zone — hotel needs your plate number ahead of time</li>
+        <li><b>Granada:</b> no car needed; taxi up to viewpoints, walk down</li>
+        <li><b>Dec 25–26:</b> many attractions closed or on holiday hours — plans lean on food, walks, and lights those days</li>
+        <li><b>Pack:</b> December in Andalucía is mild by day (55–65°F) but cold at night, especially Ronda and Granada — layers and a warm jacket</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>Andalucía · December 2026 · shared trip plan — updated as decisions are made</footer>
+
+<script>
+(function(){
+  var pages = document.querySelectorAll('section.page');
+  var tabs = document.querySelectorAll('nav.tabs a');
+  function show(id){
+    var found = false;
+    pages.forEach(function(p){
+      var on = p.id === 'page-' + id;
+      p.classList.toggle('active', on);
+      if(on) found = true;
+    });
+    if(!found){ document.getElementById('page-overview').classList.add('active'); id = 'overview'; }
+    tabs.forEach(function(t){ t.classList.toggle('active', t.dataset.page === id); });
+    window.scrollTo({top:0, behavior:'auto'});
+  }
+  function route(){
+    var id = (location.hash || '#overview').replace('#','');
+    show(id);
+  }
+  window.addEventListener('hashchange', route);
+  route();
+})();
+</script>
+</body>
+</html>
